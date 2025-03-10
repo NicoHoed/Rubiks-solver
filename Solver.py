@@ -1,8 +1,13 @@
+##################################################################
+# Simple code: Rubik capture
+##################################################################
+
 import cv2
 import kociemba
 
+
 # Start camera
-vid = cv2.VideoCapture(0)
+vid = cv2.VideoCapture(1)
 
 # Create empty list1
 rubik = []
@@ -12,10 +17,6 @@ for i in range(6):
     while 1:
         # Read camera
         ret, frame = vid.read()
-
-        # Convert frame from BGR to HSV
-        hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
         # Draw rectangle on captured image
         cv2.rectangle(frame, (100, 100), (400, 400), (0, 255, 0), 2)
 
@@ -24,16 +25,16 @@ for i in range(6):
 
         # Break by pressing "z" (not "Z")
         if cv2.waitKey(10) == ord('z'):
-            # Get color from 9 positions in HSV format
-            color1 = hsv_frame[150, 150]
-            color2 = hsv_frame[150, 250]
-            color3 = hsv_frame[150, 350]
-            color4 = hsv_frame[250, 150]
-            color5 = hsv_frame[250, 250]
-            color6 = hsv_frame[250, 350]
-            color7 = hsv_frame[350, 150]
-            color8 = hsv_frame[350, 250]
-            color9 = hsv_frame[350, 350]
+            # Get color from 9 positions
+            color1 = frame[150, 150]
+            color2 = frame[150, 250]
+            color3 = frame[150, 350]
+            color4 = frame[250, 150]
+            color5 = frame[250, 250]
+            color6 = frame[250, 350]
+            color7 = frame[350, 150]
+            color8 = frame[350, 250]
+            color9 = frame[350, 350]
 
             # Add color to Rubik list
             rubik.append(color1)
@@ -66,24 +67,24 @@ print("Color list of 6 faces:")
 print(core)
 
 # ------Compare color of each square to decide that is the color of which face-------------
-# Define HSV color ranges for Rubik's Cube colors (Hue, Saturation, Value)
 colors = {
-    "Y": (30, 255, 255),  # Yellow (Hue: 30)
-    "R": (0, 255, 255),  # Red (Hue: 0)
-    "W": (0, 0, 255),  # White (Hue: 0)
-    "B": (120, 255, 255),  # Blue (Hue: 120)
-    "O": (15, 255, 255),  # Orange (Hue: 15)
-    "G": (60, 255, 255)  # Green (Hue: 60)
+    "O" : core[0].tolist(),
+    "B" : core[1].tolist(),
+    "W" : core[2].tolist(),
+    "R": core[3].tolist(),
+    "G": core[4].tolist(),
+    "Y": core[5].tolist(),
+
 }
 
 
-def compare(hsv):
-    best = ("", 999)
 
+def compare(bgr):
+    best = ("", 999)
     for color in colors:
         col = colors[color]
-        # Calculate distance between the current HSV value and the predefined color's HSV
-        temp = abs(hsv[0] - int(col[0])) + abs(hsv[1] - int(col[1])) + abs(hsv[2] - int(col[2]))
+
+        temp = abs(bgr[0] - int(col[0])) + abs(bgr[1] - int(col[1])) + abs(bgr[2] - int(col[2]))
         if temp < best[1]:
             best = (color, temp)
     return best[0]
@@ -91,8 +92,10 @@ def compare(hsv):
 
 cube = ""
 
+
 for squares in rubik:
-    cube = cube + compare(squares.tolist())
+
+    cube = cube + (compare(squares.tolist()))
 
 print('****************************')
 print(cube)
@@ -118,7 +121,9 @@ print(cubeConverted)
 print('****************************')
 
 # ------Apply algorithm using data of the Rubik cube above to get the solving moves--------
+
 t = kociemba.solve(cubeConverted)
 
 # ------Apply algorithm using data of the Rubik cube above to get the solving moves--------
+
 print(t)
