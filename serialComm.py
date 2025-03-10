@@ -1,33 +1,25 @@
-##################################################################
-# Simple code: Serial communication
-##################################################################
-
 import serial
 import time
 
-
-# Example Moves:
-t = "R L U D"
+# Read the solution from the file
+with open("solution.txt", "r") as f:
+    t = f.read().strip()  # Read and remove any extra spaces
 
 # Open Serial port
 arduino = serial.Serial(port='COM3', baudrate=115200)
 
-# Wait 10 seconds
-time.sleep(10)
+# Wait for Arduino to initialize
+time.sleep(5)
 
-# Send word "MOVE" to Arduino
-arduino.write(bytes("MOVE",   'utf-8'))
+# Send start signal
+arduino.write(bytes("MOVE", 'utf-8'))
+time.sleep(2)  # Wait for Arduino acknowledgment (if needed)
 
-# Wait 10 seconds
-time.sleep(10)
+# Send solving moves
+arduino.write(bytes(t, 'utf-8'))
 
-# Send solving Moves
-arduino.write(bytes(t,   'utf-8'))
-
-# Wait 60 seconds
-time.sleep(60)
+# Wait for Arduino to finish execution (adjust timing as needed)
+time.sleep(30)
 
 # Close Serial port
 arduino.close()
-
-

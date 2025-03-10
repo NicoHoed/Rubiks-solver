@@ -1,13 +1,9 @@
-##################################################################
-# Simple code: Rubik capture
-##################################################################
-
 import cv2
 import kociemba
 
 
 # Start camera
-vid = cv2.VideoCapture(1)
+vid = cv2.VideoCapture(0)
 
 # Create empty list1
 rubik = []
@@ -60,11 +56,11 @@ cv2.destroyAllWindows()
 vid.release()
 
 # Color list of 54 squares
-print("Color list of 54 squares:")
-print(rubik)
+#print("Color list of 54 squares:")
+#print(rubik)
 # Color list of 6 faces
-print("Color list of 6 faces:")
-print(core)
+#print("Color list of 6 faces:")
+#print(core)
 
 # ------Compare color of each square to decide that is the color of which face-------------
 colors = {
@@ -76,7 +72,6 @@ colors = {
     "Y": core[5].tolist(),
 
 }
-
 
 
 def compare(bgr):
@@ -97,9 +92,6 @@ for squares in rubik:
 
     cube = cube + (compare(squares.tolist()))
 
-print('****************************')
-print(cube)
-
 cubeConverted = ''
 
 for char in cube:
@@ -116,14 +108,16 @@ for char in cube:
     elif char == 'O':
         cubeConverted += 'U'
 
-print('****************************')
-print(cubeConverted)
-print('****************************')
 
 # ------Apply algorithm using data of the Rubik cube above to get the solving moves--------
+
+print("Cube String for Kociemba Solver:", cubeConverted)
+print("Length of Cube String:", len(cubeConverted))
+
 
 t = kociemba.solve(cubeConverted)
 
-# ------Apply algorithm using data of the Rubik cube above to get the solving moves--------
 
-print(t)
+# Save solving moves to a file
+with open("solution.txt", "w") as f:
+    f.write(t)
