@@ -10,7 +10,7 @@ import time
 t = "R L U D"
 
 # Open Serial port
-arduino = serial.Serial(port='COM7', baudrate=115200)
+arduino = serial.Serial(port='COM3', baudrate=115200)
 
 # Wait 10 seconds
 time.sleep(10)
