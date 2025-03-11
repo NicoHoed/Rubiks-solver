@@ -94,6 +94,18 @@ for squares in rubik:
 
 cubeConverted = ''
 
+d = {
+    "G" : "L",
+    "W" : "F",
+    "Y" : "B",
+    "R" : "D",
+    "B" : "R",
+    "O" : "U"
+}
+
+for char in cube :
+    cubeConverted += d[char]
+
 for char in cube:
     if char == 'G':
         cubeConverted += 'L'
