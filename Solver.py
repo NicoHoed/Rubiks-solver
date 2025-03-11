@@ -3,7 +3,7 @@ import kociemba
 
 
 # Start camera
-vid = cv2.VideoCapture(0)
+vid = cv2.VideoCapture(1)
 
 # Create empty list1
 rubik = []
