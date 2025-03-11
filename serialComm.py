@@ -7,7 +7,7 @@ with open("solution.txt", "r") as f:
     t = f.read()
 
 # Open Serial port
-arduino = serial.Serial(port='COM1', baudrate=115200)
+arduino = serial.Serial(port='COM5', baudrate=115200)
 
 # Wait for Arduino to initialize
 time.sleep(3)
@@ -28,7 +28,6 @@ while True:
 
 arduino.write(bytes(" END", 'utf-8'))
 
-# TODO : DROP THE CUBE AT THE END
 
 #arduino.write(bytes(t, 'utf-8'))
 
