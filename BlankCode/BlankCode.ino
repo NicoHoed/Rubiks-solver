@@ -12,9 +12,9 @@ Servo Serv4a;  //create a servo object named Serv4a
 Servo Serv4b;  //create a servo object named Serv4b
 
 
-const int shrt = 500;
-const int lng = 400;
-const int vshrt = 400;
+const int shrt = 300;
+const int lng = 350;
+const int vshrt = 260;
 
 void ini() {
   // dung
@@ -426,7 +426,7 @@ void U2D2(){
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   ini();
   Serial.println("Done!");
   Serial.println("Input the rubik cube");
@@ -530,10 +530,10 @@ void loop() {
             LL();
           }
           if (S[trash] == "D2") {
-            DDBE4();
+            UUAFT();
             FF();
             FF();
-            DDAFT();
+            UUBE4();
           }
           if (S[trash] == "U2") {
             UUBE4();
